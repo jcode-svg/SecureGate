@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<!--<Nullable>enable</Nullable>-->
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SecureGate.Application\SecureGate.Application.csproj" />
+		<ProjectReference Include="..\SecureGate.Domain\SecureGate.Domain.csproj" />
+		<ProjectReference Include="..\SecureGate.Repository\SecureGate.Repository.csproj" />
+		<ProjectReference Include="..\SecureGate.SharedKernel\SecureGate.SharedKernel.csproj" />
+	</ItemGroup>
+</Project>

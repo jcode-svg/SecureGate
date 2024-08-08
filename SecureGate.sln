@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureGate.API", "SecureGate.API\SecureGate.API.csproj", "{B4919037-E44C-41E0-A6CA-C6C0DA60B41D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7278559F-23E7-4731-8C2B-45D4F0E28C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Application", "SecureGate.Application\SecureGate.Application.csproj", "{DC1E2E06-76E2-4950-B14E-38EB9582B6BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Domain", "SecureGate.Domain\SecureGate.Domain.csproj", "{0CB059B0-CA5D-4EBD-B61E-491A5EACC2E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Infrastructure", "SecureGate.Infrastructure\SecureGate.Infrastructure.csproj", "{BD9A24CB-C22B-4575-BFCC-08E248EBD2B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Repository", "SecureGate.Repository\SecureGate.Repository.csproj", "{365B4622-4581-452C-8F3A-2C2E9CC6813F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.SharedKernel", "SecureGate.SharedKernel\SecureGate.SharedKernel.csproj", "{8B35D85B-AB90-4D9D-9943-46ADFE6E7A77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4919037-E44C-41E0-A6CA-C6C0DA60B41D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4919037-E44C-41E0-A6CA-C6C0DA60B41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4919037-E44C-41E0-A6CA-C6C0DA60B41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4919037-E44C-41E0-A6CA-C6C0DA60B41D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC1E2E06-76E2-4950-B14E-38EB9582B6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1E2E06-76E2-4950-B14E-38EB9582B6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1E2E06-76E2-4950-B14E-38EB9582B6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1E2E06-76E2-4950-B14E-38EB9582B6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB059B0-CA5D-4EBD-B61E-491A5EACC2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB059B0-CA5D-4EBD-B61E-491A5EACC2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB059B0-CA5D-4EBD-B61E-491A5EACC2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB059B0-CA5D-4EBD-B61E-491A5EACC2E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9A24CB-C22B-4575-BFCC-08E248EBD2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9A24CB-C22B-4575-BFCC-08E248EBD2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9A24CB-C22B-4575-BFCC-08E248EBD2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9A24CB-C22B-4575-BFCC-08E248EBD2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{365B4622-4581-452C-8F3A-2C2E9CC6813F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{365B4622-4581-452C-8F3A-2C2E9CC6813F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{365B4622-4581-452C-8F3A-2C2E9CC6813F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{365B4622-4581-452C-8F3A-2C2E9CC6813F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B35D85B-AB90-4D9D-9943-46ADFE6E7A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B35D85B-AB90-4D9D-9943-46ADFE6E7A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B35D85B-AB90-4D9D-9943-46ADFE6E7A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B35D85B-AB90-4D9D-9943-46ADFE6E7A77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4919037-E44C-41E0-A6CA-C6C0DA60B41D} = {4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}
+		{DC1E2E06-76E2-4950-B14E-38EB9582B6BF} = {4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}
+		{0CB059B0-CA5D-4EBD-B61E-491A5EACC2E7} = {4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}
+		{BD9A24CB-C22B-4575-BFCC-08E248EBD2B6} = {4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}
+		{365B4622-4581-452C-8F3A-2C2E9CC6813F} = {4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}
+		{8B35D85B-AB90-4D9D-9943-46ADFE6E7A77} = {4B49A842-A0E3-4C5F-A4E5-0FCFBDC0F7DF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4B772AD-5917-425D-9F50-6CF63A334A05}
+	EndGlobalSection
+EndGlobal
