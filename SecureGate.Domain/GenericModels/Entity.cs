@@ -27,6 +27,11 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
         return base.Equals(otherObject);
     }
 
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
+
     public bool Equals(Entity<TId> other)
     {
         if (other == null)

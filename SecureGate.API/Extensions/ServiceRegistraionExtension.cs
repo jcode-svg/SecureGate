@@ -14,6 +14,15 @@ namespace SecureGate.API.Extensions
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAccessRuleRepository, AccessRuleRepository>();
+            services.AddScoped<IAccessRuleRepository, AccessRuleRepository>();
+            services.AddScoped<IEventLogRepository, EventLogRepository>();
+            services.AddScoped<IOfficeManagementRepository, OfficeManagementRepository>();
+            services.AddScoped<IAccessControlService, AccessControlService>();
+            services.AddScoped<IAccessVerificationService, AccessVerificationService>();
+            services.AddScoped<IEmployeeManagementService, EmployeeManagementService>();
+            services.AddScoped<IEventLogService, EventLogService>();
+            services.AddScoped<IOfficeManagementService, OfficeManagementService>();
         }
     }
 }

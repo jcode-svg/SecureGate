@@ -21,19 +21,19 @@ namespace SecureGate.Application.Implementation
 
         public async Task<ResponseWrapper<string>> Register(RegisterRequest request)
         {
-            var employee = await _employeeRepository.GetEmployeeAsync(request.Username);
+            Employee employee = await _employeeRepository.GetEmployeeAsync(request.Username);
 
             if (employee != null)
             {
                 return ResponseWrapper<string>.Error(EmployeeExistsAlready);
             }
 
-            var newEmployee = Employee.CreateNewEmployee(request);
-            var bioData = BioData.CreateEmployeeBiodata(newEmployee.Id, request);
+            Employee newEmployee = Employee.CreateNewEmployee(request);
+            BioData bioData = BioData.CreateEmployeeBiodata(newEmployee.Id, request);
             newEmployee.UpdateBiodataId(bioData.Id);
 
-            _employeeRepository.AddNewEmployeeAsync(newEmployee);
-            _employeeRepository.AddEmployeeBiodataAsync(bioData);
+            await _employeeRepository.AddNewEmployeeAsync(newEmployee);
+            await _employeeRepository.AddEmployeeBiodataAsync(bioData);
 
             await _employeeRepository.SaveChangesAsync();
 
@@ -42,7 +42,7 @@ namespace SecureGate.Application.Implementation
 
         public async Task<ResponseWrapper<LoginResponse>> Login(LoginRequest request)
         {
-            var employee = await _employeeRepository.GetEmployeeAsync(request.Username);
+            Employee employee = await _employeeRepository.GetEmployeeAsync(request.Username);
 
             if (employee == null)
             {
@@ -61,7 +61,7 @@ namespace SecureGate.Application.Implementation
 
             var response = new LoginResponse
             {
-                Token = _tokenGenerator.GenerateToken(request.Username, employee.Id.ToString(), employee.RoleId.ToString())
+                Token = _tokenGenerator.GenerateToken(request.Username, employee.Id.ToString(), employee.Role.Name)
             };
 
             return ResponseWrapper<LoginResponse>.Success(response);

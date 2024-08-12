@@ -1,5 +1,4 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using SecureGate.Domain.ViewModels.Request;
 
 namespace SecureGate.SharedKernel.Validation
@@ -26,11 +25,16 @@ namespace SecureGate.SharedKernel.Validation
 
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("First Name is required.")
-                .MaximumLength(20).WithMessage("First Name must not be greater than 20 characters.");
+                .MaximumLength(20).WithMessage("First Name must not be greater than 20 characters.")
+                .Matches("^[a-zA-Z]*$").WithMessage("First Name must not contain special characters.");
 
             RuleFor(x => x.LastName)
                 .NotEmpty().WithMessage("Last Name is required.")
-                .MaximumLength(20).WithMessage("Last Name must not be greater than 20 characters.");
+                .MaximumLength(20).WithMessage("Last Name must not be greater than 20 characters.")
+                .Matches("^[a-zA-Z]*$").WithMessage("Last Name must not contain special characters.");
+
+            RuleFor(x => x.DateOfBirth)
+                .NotEmpty().WithMessage("Date of Birth is required.");
         }
     }
 }
