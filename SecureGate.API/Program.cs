@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using SecureGate.API.CustomMiddlewares;
 using SecureGate.API.Extensions;
+using SecureGate.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +11,10 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 
 builder.Services.AddCustomAuthentication(configuration);
-builder.Services.AddDatabase();
+builder.Services.ConfigureDatabase();
 builder.Services.AddApplicationServices();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
@@ -22,6 +24,15 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
 
 var app = builder.Build();
 
+// migrate any database changes on startup (includes initial db creation)
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    //dataContext.Database.EnsureCreated();
+    dataContext.Database.Migrate();
+}
+
+app.UseCors("corspolicy");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -32,6 +43,9 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ErrorHandler>();
 app.UseHttpsRedirection();
 
+app.UseMiddleware<AuthorizationMiddleware>();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

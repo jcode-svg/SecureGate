@@ -19,7 +19,12 @@ namespace SecureGate.API.Extensions
                     ValidAudience = configuration.GetSection("JwtSettings:Audience").Value,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JwtSettings:SecretKey").Value))
                 });
-            services.AddAuthorization();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy =>
+                    policy.RequireClaim("Role", "Admin"));
+            });
         }
     }
 }

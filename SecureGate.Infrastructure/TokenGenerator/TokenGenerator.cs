@@ -18,7 +18,7 @@ public class TokenGenerator : ITokenGenerator
         _configuration = configuration;
     }
 
-    public string GenerateToken(string username, string profileId, string roleId)
+    public string GenerateToken(string username, string profileId, string role)
     {
         var issuer = _configuration.GetSection("JwtSettings:Issuer").Value;
         var secretKey = _configuration.GetSection("JwtSettings:SecretKey").Value;
@@ -28,7 +28,7 @@ public class TokenGenerator : ITokenGenerator
         var claims = new[]
         {
             new Claim(SecureGateClaims.ProfileId, profileId),
-            new Claim(SecureGateClaims.Role, roleId)
+            new Claim(SecureGateClaims.Role, role)
         };
 
         var signingCredentials = new SigningCredentials(

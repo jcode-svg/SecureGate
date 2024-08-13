@@ -8,9 +8,6 @@ namespace SecureGate.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<BioData> builder)
         {
-            builder.Property(e => e.EmployeeId)
-                .IsRequired();
-
             builder.Property(e => e.FirstName)
                 .IsRequired()
                 .HasMaxLength(20);

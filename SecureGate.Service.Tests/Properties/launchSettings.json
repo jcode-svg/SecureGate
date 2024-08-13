@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SecureGate.Service.Tests": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
