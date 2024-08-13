@@ -37,3 +37,5 @@ To facilitate smooth deployment and integration into production environments, I 
 
 Conclusion
 This architecture and set of design decisions provide a solid foundation for developing a scalable, maintainable, and secure backend system. By leveraging a layered approach, design patterns, and carefully selected technologies, I designed the solution to meet the requirements of the test case while supporting future growth and changes.
+
+PS: You can login with this Admin Credentials- Username- admin@gmail.com / Password- Password1@
