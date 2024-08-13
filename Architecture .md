@@ -39,3 +39,5 @@ Conclusion
 This architecture and set of design decisions provide a solid foundation for developing a scalable, maintainable, and secure backend system. By leveraging a layered approach, design patterns, and carefully selected technologies, I designed the solution to meet the requirements of the test case while supporting future growth and changes.
 
 PS: You can login with this Admin Credentials- Username- admin@gmail.com / Password- Password1@
+
+Demo Video Link- https://drive.google.com/file/d/1LZb9YEFlMxraykH28iZI-87DYseAScd0/view?usp=sharing
