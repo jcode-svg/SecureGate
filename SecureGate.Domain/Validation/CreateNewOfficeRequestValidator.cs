@@ -12,7 +12,10 @@ namespace SecureGate.Domain.Validation
                 .MaximumLength(20).WithMessage("Name must not be greater than 20 characters.");
 
             RuleFor(x => x.CreateDoorRequest)
-                .NotEmpty().WithMessage("Create Door Request is required.");
+                .NotEmpty().WithMessage("Create Door Requests are required.")
+                .Must(list => list != null && list.Any()).WithMessage("Create Door Requests cannot be empty.")
+                .ForEach(doorRequest =>
+                    doorRequest.SetValidator(new CreateDoorRequestValidator()));
         }
     }
 }
