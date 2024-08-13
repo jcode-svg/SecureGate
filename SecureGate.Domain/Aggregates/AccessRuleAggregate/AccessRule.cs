@@ -10,6 +10,13 @@ namespace SecureGate.Domain.Aggregates.AccessRuleAggregate
         public AccessRule() : base(Guid.NewGuid())
         { }
 
+        public AccessRule(Guid id, Guid employeeId, Guid doorId, bool active) : base(id)
+        {
+            EmployeeId = employeeId;
+            DoorId = doorId;
+            Active = active;
+        }
+
         public Guid EmployeeId { get;  set; }
         public Guid DoorId { get;  set; }
         public bool Active { get; private set; }

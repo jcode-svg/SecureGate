@@ -1,4 +1,6 @@
-﻿namespace SecureGate.Domain.GenericModels;
+﻿using static SecureGate.SharedKernel.HelperMethods.Utility;
+
+namespace SecureGate.Domain.GenericModels;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
 {
@@ -11,7 +13,7 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
             throw new ArgumentException("The ID cannot be the type's default value.", "id");
         }
         Id = id;
-        CreatedAt = DateTime.UtcNow.AddHours(1);
+        CreatedAt = GetCurrentTime();
     }
 
     protected Entity()

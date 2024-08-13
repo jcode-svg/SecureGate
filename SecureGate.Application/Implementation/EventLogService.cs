@@ -60,7 +60,7 @@ namespace SecureGate.Application.Implementation
                 return ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>.Error(NoProfileFoundThirdPerson);
             }
 
-            (List<EventLog> allEvents, bool hasNextPage) = await _eventLogRepository.GetAllEvents(request);
+            (List<EventLog> allEvents, bool hasNextPage) = await _eventLogRepository.GetAllEventsByEmployee(request, employee.Id);
 
             if (allEvents == null || !allEvents.Any())
             {

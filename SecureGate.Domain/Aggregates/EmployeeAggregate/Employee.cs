@@ -15,11 +15,14 @@ namespace SecureGate.Domain.Aggregates.EmployeeAggregate
         {
 
         }
+        public Employee(Guid id, string username) : base(id)
+        {
+            Username = username;
+        }
 
         public string Username { get;  private set; }
         public string PasswordHash { get;  private set; }
         public bool RegistrationApproved { get; private set; }
-        //Foreign key by convention to Role table
         public Guid? RoleId { get; set; }
         public Guid? BioDataId { get; set; }
         public Role Role { get; set; }

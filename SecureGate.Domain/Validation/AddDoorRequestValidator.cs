@@ -11,7 +11,8 @@ namespace SecureGate.Domain.Validation
                 .NotEmpty().WithMessage("Office Id is required.");
 
             RuleFor(x => x.NewDoor)
-                .NotEmpty().WithMessage("New Door is required.");
+                .NotEmpty().WithMessage("New Door is required.")
+                .SetValidator(new CreateDoorRequestValidator());
         }
     }
 }

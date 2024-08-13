@@ -11,9 +11,10 @@ namespace SecureGate.Domain.Aggregates.EmployeeAggregate
         }
 
         public Role(Guid id) : base(id)
-        {
+        {}
 
-        }
+        public Role(Guid id, string name) : base(id)
+        {}
 
         public string Name { get;  set; }
         public AccessLevel AccessLevel { get;  set; }

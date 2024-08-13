@@ -8,7 +8,10 @@ namespace SecureGate.Domain.Aggregates.OfficeAggregate
     {
         public Door() : base(Guid.NewGuid())
         { }
-
+        public Door(Guid id, AccessType accessType, AccessLevel accessLevel) : base(id)
+        {
+            
+        }
         public string Name { get; private set; }
         public AccessType AccessType { get; private set; }
         public AccessLevel AccessLevel { get; private set; }
