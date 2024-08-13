@@ -2,6 +2,7 @@
 using OrderService.Infrastructure.TokenGenerator;
 using SecureGate.Application.Implementation;
 using SecureGate.Domain.Aggregates.EmployeeAggregate;
+using SecureGate.Domain.Aggregates.EmployeeAggregate.Wrapper;
 using SecureGate.Domain.RepositoryContracts;
 
 namespace SecureGate.Service.Tests.AuthServiceTests
@@ -13,8 +14,8 @@ namespace SecureGate.Service.Tests.AuthServiceTests
         // Mocks
         public readonly Mock<IEmployeeRepository> EmployeeRepositoryMock = new Mock<IEmployeeRepository>();
         public readonly Mock<ITokenGenerator> TokenGeneratorMock = new Mock<ITokenGenerator>();
-        public readonly Mock<Employee> EmployeeMock = new Mock<Employee>();
-
+        public readonly Mock<IEmployeeWrapper> EmployeeWrapperMock = new Mock<IEmployeeWrapper>();
+        
         // Test Data
         protected readonly string _testPassword = "Password1@";
         protected readonly Guid _testEmployeeId = Guid.NewGuid();

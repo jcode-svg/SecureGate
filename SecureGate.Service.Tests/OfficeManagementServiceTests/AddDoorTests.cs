@@ -48,11 +48,11 @@ namespace SecureGate.Service.Tests.OfficeManagementServiceTests
             var request = new AddDoorRequest
             {
                 OfficeId = officeId,
-                NewDoor = new CreateDoorRequest() // Initialize with appropriate test data
+                NewDoor = new CreateDoorRequest() 
             };
 
             OfficeManagementRepositoryMock.Setup(x => x.GetOfficeByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new Office()); // Return a valid Office
+                .ReturnsAsync(new Office()); 
 
             // Act
             var result = await OfficeManagementService.AddDoor(request);

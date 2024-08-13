@@ -83,7 +83,7 @@ namespace SecureGate.Service.Tests.EmployeeManagementServiceTests
                 Approve = true
             };
 
-            var employee = new Employee(_testEmployeeId, _testUsername);
+            var employee = new Employee(_testEmployeeId, _testUsername, false);
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(request.Username))
                 .ReturnsAsync(employee);
             EmployeeRepositoryMock.Setup(x => x.GetRoleByIdAsync(It.IsAny<Guid>()))
@@ -108,7 +108,7 @@ namespace SecureGate.Service.Tests.EmployeeManagementServiceTests
                 Approve = true
             };
 
-            var employee = new Employee(_testEmployeeId, _testUsername);
+            var employee = new Employee(_testEmployeeId, _testUsername, false);
             var role = new Role(Guid.NewGuid(), "Admin");
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(request.Username))
                 .ReturnsAsync(employee);
@@ -135,7 +135,7 @@ namespace SecureGate.Service.Tests.EmployeeManagementServiceTests
                 Approve = false
             };
 
-            var employee = new Employee(_testEmployeeId, _testUsername);
+            var employee = new Employee(_testEmployeeId, _testUsername, false);
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(request.Username))
                 .ReturnsAsync(employee);
 

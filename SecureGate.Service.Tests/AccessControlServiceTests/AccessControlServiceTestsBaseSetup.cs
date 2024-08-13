@@ -25,7 +25,7 @@ namespace SecureGate.Service.Tests.AccessControlServiceTests
 
         public AccessControlServiceTestsBaseSetup()
         {
-            // Setup mocks with realistic data
+            // Setup mocks 
             OfficeManagementRepositoryMock.Setup(x => x.GetDoorByIdAsync(_testDoorId))
                 .ReturnsAsync(new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1));
 

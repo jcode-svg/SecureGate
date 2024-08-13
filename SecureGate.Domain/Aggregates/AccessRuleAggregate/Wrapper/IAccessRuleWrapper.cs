@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static SecureGate.SharedKernel.Enumerations.Enums;
+﻿using static SecureGate.SharedKernel.Enumerations.Enums;
 
 namespace SecureGate.Domain.Aggregates.AccessRuleAggregate.Wrapper
 {
     public interface IAccessRuleWrapper
     {
+        bool VerifyIndividualAccess(Guid id, Guid employeeId, Guid doorId, bool active);
         bool VerifyLevelBasedAccess(AccessLevel requiredLevel, AccessLevel userLevel);
     }
 }

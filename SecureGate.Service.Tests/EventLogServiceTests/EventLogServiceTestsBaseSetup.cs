@@ -23,7 +23,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
 
         public EventLogServiceTestsBaseSetup()
         {
-            // Setup mocks with realistic data
+            // Setup mocks
             OfficeManagementRepositoryMock.Setup(x => x.GetDoorByIdAsync(_testDoorId))
                 .ReturnsAsync(new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1));
 

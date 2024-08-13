@@ -38,11 +38,9 @@ namespace SecureGate.Service.Tests.AuthServiceTests
                 Password = _testPassword
             };
 
-            var employee = new Employee(_testEmployeeId, _testUsername);
+            var employee = new Employee(_testEmployeeId, _testUsername, false);
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(request.Username))
                 .ReturnsAsync(employee);
-            EmployeeMock.Setup(x => x.IsRegistrationApproved())
-                .Returns(false);
 
             // Act
             var result = await AuthService.Login(request);
@@ -57,31 +55,30 @@ namespace SecureGate.Service.Tests.AuthServiceTests
         {
             // Arrange
             string errorMessage = string.Empty;
+            string passwordHash = "";
             var request = new LoginRequest
             {
                 Username = _testUsername,
                 Password = _testPassword
             };
 
-            var employee = new Employee(_testEmployeeId, _testUsername);
+            var employee = new Employee(_testEmployeeId, _testUsername, true, passwordHash);
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(request.Username))
                 .ReturnsAsync(employee);
-            EmployeeMock.Setup(x => x.IsPasswordValid(request.Password, out errorMessage))
-                .Returns(false)
-                .Callback((string password, out string error) => error = "Invalid password");
 
             // Act
             var result = await AuthService.Login(request);
 
             // Assert
             Assert.False(result.IsSuccessful);
-            Assert.Equal("Invalid password", result.Message);
+            Assert.Equal(IncorrectPassword, result.Message);
         }
 
         [Fact]
         public async Task Login_ShouldReturnSuccess_WhenLoginIsValid()
         {
             // Arrange
+            string passwordHash = "238ad148a42c3452f95fad480b2a5adf31151f6c7f3e1777030ee19edc4c9a73e20099e2f7c15c8f3e820614bc5175a9fe5a1b3c7c9bc3e3006c581bbe3aafa8";
             string errorMessage = string.Empty;
             var request = new LoginRequest
             {
@@ -89,11 +86,9 @@ namespace SecureGate.Service.Tests.AuthServiceTests
                 Password = _testPassword
             };
 
-            var employee = new Employee(_testEmployeeId, _testUsername);
+            var employee = new Employee(_testEmployeeId, _testUsername, true, passwordHash);
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(request.Username))
                 .ReturnsAsync(employee);
-            EmployeeMock.Setup(x => x.IsPasswordValid(request.Password, out errorMessage))
-                .Returns(true);
 
             TokenGeneratorMock.Setup(x => x.GenerateToken(request.Username, _testEmployeeId.ToString(), employee.Role.Name))
                 .Returns("token");

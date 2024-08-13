@@ -3,6 +3,7 @@ using SecureGate.Domain.GenericModels;
 using SecureGate.Domain.ViewModels.Request;
 using SecureGate.SharedKernel.Models;
 using static SecureGate.SharedKernel.AppConstants.ErrorMessages;
+using static SecureGate.SharedKernel.Enumerations.Enums;
 
 namespace SecureGate.Domain.Aggregates.EmployeeAggregate
 {
@@ -15,9 +16,17 @@ namespace SecureGate.Domain.Aggregates.EmployeeAggregate
         {
 
         }
-        public Employee(Guid id, string username) : base(id)
+        public Employee(Guid id, string username, bool registrationApproved = true, string passwordHash = ""
+            , string firstName = "", string lastName = "") : base(id)
         {
             Username = username;
+            Role = new Role
+            {
+                AccessLevel = AccessLevel.Level1
+            };
+            RegistrationApproved = registrationApproved;
+            PasswordHash = passwordHash;
+            BioData = BioData.SetName(firstName, lastName);
         }
 
         public string Username { get;  private set; }

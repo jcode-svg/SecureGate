@@ -32,5 +32,14 @@ namespace SecureGate.Domain.Aggregates.EmployeeAggregate
             DateOfBirth = new DateTime(1990, 4, 3);
             return this;
         }
+
+        public static BioData SetName(string firstName, string LastName)
+        {
+            return new BioData
+            {
+                FirstName = firstName,
+                LastName = LastName
+            };
+        }
     }
 }

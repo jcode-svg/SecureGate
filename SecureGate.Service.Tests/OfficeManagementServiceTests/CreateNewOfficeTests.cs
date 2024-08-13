@@ -11,7 +11,11 @@ namespace SecureGate.Service.Tests.OfficeManagementServiceTests
             // Arrange
             var request = new CreateNewOfficeRequest
             {
-                // Initialize with appropriate test data
+                Name = "Test",
+                CreateDoorRequest = new List<CreateDoorRequest>
+                {
+
+                }
             };
 
             // Act

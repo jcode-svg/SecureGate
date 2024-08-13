@@ -18,6 +18,8 @@ namespace SecureGate.Service.Tests.AccessVerificationServiceTests
         public readonly Mock<IAccessRuleRepository> AccessRuleRepositoryMock = new Mock<IAccessRuleRepository>();
         public readonly Mock<IEmployeeRepository> EmployeeRepositoryMock = new Mock<IEmployeeRepository>();
         public readonly Mock<IEventLogRepository> EventLogRepositoryMock = new Mock<IEventLogRepository>();
+        public readonly Mock<IAccessRuleWrapper> AccessRuleWrapperMock = new Mock<IAccessRuleWrapper>();
+        public readonly Mock<AccessRule> AccessRuleMock = new Mock<AccessRule>();
 
         // Test Data
         protected readonly Guid _testEmployeeId = Guid.NewGuid();

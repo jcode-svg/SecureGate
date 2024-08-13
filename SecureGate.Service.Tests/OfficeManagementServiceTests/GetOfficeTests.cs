@@ -42,7 +42,7 @@ namespace SecureGate.Service.Tests.OfficeManagementServiceTests
         {
             // Arrange
             var officeId = Guid.NewGuid().ToString();
-            var office = new Office(); // Initialize with appropriate test data
+            var office = new Office();
 
             OfficeManagementRepositoryMock.Setup(x => x.GetOfficeByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(office);

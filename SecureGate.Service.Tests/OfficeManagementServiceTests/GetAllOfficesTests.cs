@@ -27,7 +27,7 @@ namespace SecureGate.Service.Tests.OfficeManagementServiceTests
             // Arrange
             var offices = new List<Office>
         {
-            new Office() // Initialize with appropriate test data
+            new Office() 
         };
 
             OfficeManagementRepositoryMock.Setup(x => x.GetAllOfficesAsync())

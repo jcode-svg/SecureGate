@@ -86,7 +86,7 @@ namespace SecureGate.Application.Implementation
             await _officeManagementRepository.AddDoorAsync(newDoor);
             await _officeManagementRepository.SaveChangesAsync();
 
-            return ResponseWrapper<string>.Success(DoorAdded);
+            return ResponseWrapper<string>.Success(DoorAdded, DoorAdded);
         }
     }
 }
