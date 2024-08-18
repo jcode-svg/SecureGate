@@ -48,11 +48,6 @@ namespace SecureGate.Domain.Aggregates.AccessRuleAggregate
             Active = false;
         }
 
-        public static bool VerifyLevelBasedAccess(AccessLevel employeeAccessLevel, AccessLevel doorAccessLevel)
-        {
-            return (int)employeeAccessLevel >= (int)doorAccessLevel;
-        }
-
         public bool VerifyIndividualAccess(Guid employeeId, Guid doorId)
         {
             return EmployeeId == employeeId &&  DoorId == doorId;
