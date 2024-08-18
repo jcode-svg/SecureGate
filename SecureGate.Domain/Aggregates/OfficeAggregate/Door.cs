@@ -18,9 +18,9 @@ namespace SecureGate.Domain.Aggregates.OfficeAggregate
         public AccessType AccessType { get; private set; }
         public AccessLevel AccessLevel { get; private set; }
 
-        public Guid OfficeId { get; set; }
+        public Guid OfficeId { get; private set; }
 
-        public Office Office { get; set; }
+        public Office Office { get; private set; }
 
         public static List<Door> CreateNewDoors(List<CreateDoorRequest> request, Guid officeId)
         {

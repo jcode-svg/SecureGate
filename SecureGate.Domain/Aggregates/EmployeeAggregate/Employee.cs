@@ -20,10 +20,7 @@ namespace SecureGate.Domain.Aggregates.EmployeeAggregate
             , string firstName = "", string lastName = "") : base(id)
         {
             Username = username;
-            Role = new Role
-            {
-                AccessLevel = AccessLevel.Level1
-            };
+            Role = new Role(Guid.NewGuid());
             RegistrationApproved = registrationApproved;
             PasswordHash = passwordHash;
             BioData = BioData.SetName(firstName, lastName);
@@ -32,10 +29,10 @@ namespace SecureGate.Domain.Aggregates.EmployeeAggregate
         public string Username { get;  private set; }
         public string PasswordHash { get;  private set; }
         public bool RegistrationApproved { get; private set; }
-        public Guid? RoleId { get; set; }
-        public Guid? BioDataId { get; set; }
-        public Role Role { get; set; }
-        public BioData BioData { get; set; }
+        public Guid? RoleId { get; private set; }
+        public Guid? BioDataId { get; private set; }
+        public Role Role { get; private set; }
+        public BioData BioData { get; private set; }
 
         public static Employee CreateNewEmployee(RegisterRequest newEmployee)
         {

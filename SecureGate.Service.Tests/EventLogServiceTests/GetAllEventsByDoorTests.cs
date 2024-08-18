@@ -18,7 +18,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
             var invalidDoorId = "invalid-door-id";
 
             // Act
-            var result = await EventLogService.GetAllEventsByDoor(invalidDoorId, request);
+            var result = await EventLogService.GetAllEventsByDoor(invalidDoorId, request, _testtimzoneId);
 
             // Assert
             Assert.False(result.IsSuccessful);
@@ -36,7 +36,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
                 .ReturnsAsync((Door)null);
 
             // Act
-            var result = await EventLogService.GetAllEventsByDoor(doorId, request);
+            var result = await EventLogService.GetAllEventsByDoor(doorId, request, _testtimzoneId);
 
             // Assert
             Assert.False(result.IsSuccessful);
@@ -54,7 +54,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
                 .ReturnsAsync((new List<EventLog>(), false));
 
             // Act
-            var result = await EventLogService.GetAllEventsByDoor(doorId, request);
+            var result = await EventLogService.GetAllEventsByDoor(doorId, request, _testtimzoneId);
 
             // Assert
             Assert.False(result.IsSuccessful);
@@ -68,20 +68,15 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
             var request = new PaginatedRequest();
             var eventLogs = new List<EventLog>
         {
-            new EventLog
-            {
-                Employee = new Employee(_testEmployeeId, _testUsername),
-                Door = new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1),
-                AccessGranted = true,
-                Reason = "Test Event"
-            }
+            new EventLog(new Employee(_testEmployeeId, _testUsername), new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1)
+            , true, "Test Event")
         };
 
             EventLogRepositoryMock.Setup(x => x.GetAllEventsByDoor(request, _testDoorId))
                 .ReturnsAsync((eventLogs, true));
 
             // Act
-            var result = await EventLogService.GetAllEventsByDoor(_testDoorId.ToString(), request);
+            var result = await EventLogService.GetAllEventsByDoor(_testDoorId.ToString(), request, _testtimzoneId);
 
             // Assert
             Assert.True(result.IsSuccessful);

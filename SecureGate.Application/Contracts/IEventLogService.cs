@@ -11,8 +11,8 @@ namespace SecureGate.Application.Contracts
 {
     public interface IEventLogService
     {
-        Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEvents(PaginatedRequest request);
-        Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByDoor(string doorId, PaginatedRequest request);
-        Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByEmployee(string username, PaginatedRequest request);
+        Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEvents(PaginatedRequest request, string timeZoneId);
+        Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByDoor(string doorId, PaginatedRequest request, string timeZoneId);
+        Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByEmployee(string username, PaginatedRequest request, string timeZoneId);
     }
 }

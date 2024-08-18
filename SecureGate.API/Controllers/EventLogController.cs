@@ -4,6 +4,7 @@ using SecureGate.Application.Contracts;
 using SecureGate.Domain.Aggregates.EventLogAggregate.DTOs;
 using SecureGate.Domain.ViewModels.Response;
 using SecureGate.SharedKernel.Models;
+using System;
 using System.Net.Mime;
 
 namespace SecureGate.API.Controllers
@@ -26,9 +27,15 @@ namespace SecureGate.API.Controllers
         [ProducesResponseType(typeof(ResponseWrapper<string>), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(UnauthorizedResponse), StatusCodes.Status401Unauthorized)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<ActionResult<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>>> Events([FromQuery] PaginatedRequest request)
+        public async Task<ActionResult<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>>> Events([FromQuery] PaginatedRequest request
+            , [FromHeader(Name = "TimeZone")] string timeZoneId)
         {
-            var result = await _eventLogService.GetAllEvents(request);
+            if (string.IsNullOrEmpty(timeZoneId) || !TimeZoneInfo.GetSystemTimeZones().Any(tz => tz.Id == timeZoneId))
+            {
+                return BadRequest(new ResponseWrapper<PaginatedResponse<List<EventLogDTO>>> { Message = "Invalid or missing TimeZoneId header." });
+            }
+
+            var result = await _eventLogService.GetAllEvents(request, timeZoneId);
 
             if (!result.IsSuccessful)
             {
@@ -44,14 +51,20 @@ namespace SecureGate.API.Controllers
         [ProducesResponseType(typeof(ResponseWrapper<string>), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(UnauthorizedResponse), StatusCodes.Status401Unauthorized)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<ActionResult<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>>> EventsByEmployee([FromQuery] string username, [FromQuery] PaginatedRequest request)
+        public async Task<ActionResult<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>>> EventsByEmployee([FromQuery] string username, [FromQuery] PaginatedRequest request,
+            [FromHeader(Name = "TimeZone")] string timeZoneId)
         {
+            if (string.IsNullOrEmpty(timeZoneId) || !TimeZoneInfo.GetSystemTimeZones().Any(tz => tz.Id == timeZoneId))
+            {
+                return BadRequest(new ResponseWrapper<PaginatedResponse<List<EventLogDTO>>> { Message = "Invalid or missing TimeZoneId header." });
+            }
+
             if (string.IsNullOrWhiteSpace(username))
             {
                 return BadRequest(ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>.Error("Username is required."));
             }
 
-            var result = await _eventLogService.GetAllEventsByEmployee(username, request);
+            var result = await _eventLogService.GetAllEventsByEmployee(username, request, timeZoneId);
 
             if (!result.IsSuccessful)
             {
@@ -67,14 +80,20 @@ namespace SecureGate.API.Controllers
         [ProducesResponseType(typeof(ResponseWrapper<string>), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(UnauthorizedResponse), StatusCodes.Status401Unauthorized)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<ActionResult<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>>> EventsByDoor([FromQuery] string doorId, [FromQuery] PaginatedRequest request)
+        public async Task<ActionResult<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>>> EventsByDoor([FromQuery] string doorId, [FromQuery] PaginatedRequest request
+            , [FromHeader(Name = "TimeZone")] string timeZoneId)
         {
+            if (string.IsNullOrEmpty(timeZoneId) || !TimeZoneInfo.GetSystemTimeZones().Any(tz => tz.Id == timeZoneId))
+            {
+                return BadRequest(new ResponseWrapper<PaginatedResponse<List<EventLogDTO>>> { Message = "Invalid or missing TimeZoneId header." });
+            }
+
             if (string.IsNullOrWhiteSpace(doorId))
             {
                 return BadRequest(ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>.Error("Door Id is required."));
             }
 
-            var result = await _eventLogService.GetAllEventsByDoor(doorId, request);
+            var result = await _eventLogService.GetAllEventsByDoor(doorId, request, timeZoneId);
 
             if (!result.IsSuccessful)
             {

@@ -13,7 +13,7 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
             throw new ArgumentException("The ID cannot be the type's default value.", "id");
         }
         Id = id;
-        CreatedAt = GetCurrentTime();
+        CreatedAt = GetCurrentTimeUtc();
     }
 
     protected Entity()

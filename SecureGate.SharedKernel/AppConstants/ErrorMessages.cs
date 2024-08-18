@@ -4,6 +4,7 @@
     {
         public const string ExceptionOccurred = "Request failed, please try again later";
         public const string CannotCompleteRequest = "Request failed, please try again later";
+        public const string EmployeeNotFound = "Employee Not Found.";
         public const string EmployeeExistsAlready = "You are already registered, please login";
         public const string NoProfileFound = "You do not have a profile, kindly register";
         public const string NoProfileFoundThirdPerson = "This username does not exist, kindly confirm username and try again";

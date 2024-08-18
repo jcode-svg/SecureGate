@@ -39,7 +39,7 @@ public class TokenGenerator : ITokenGenerator
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: GetCurrentTime().AddMinutes(Convert.ToInt32(expiryMinutes)),
+                expires: GetCurrentTimeUtc().AddMinutes(Convert.ToInt32(expiryMinutes)),
                 signingCredentials: signingCredentials
                 );
 

@@ -13,9 +13,9 @@ namespace SecureGate.Domain.Aggregates.OfficeAggregate
             Doors = new List<Door>();
         }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public List<Door> Doors { get; set; }
+        public List<Door> Doors { get; private set; }
 
         public static Office CreateNewOffice(CreateNewOfficeRequest request)
         {

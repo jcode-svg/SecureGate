@@ -21,7 +21,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
                 .ReturnsAsync((Employee)null);
 
             // Act
-            var result = await EventLogService.GetAllEventsByEmployee(username, request);
+            var result = await EventLogService.GetAllEventsByEmployee(username, request, _testtimzoneId);
 
             // Assert
             Assert.False(result.IsSuccessful);
@@ -41,7 +41,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
                 .ReturnsAsync((new List<EventLog>(), false));
 
             // Act
-            var result = await EventLogService.GetAllEventsByEmployee(_testUsername, request);
+            var result = await EventLogService.GetAllEventsByEmployee(_testUsername, request, _testtimzoneId);
 
             // Assert
             Assert.False(result.IsSuccessful);
@@ -55,13 +55,8 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
             var request = new PaginatedRequest();
             var eventLogs = new List<EventLog>
         {
-            new EventLog
-            {
-                Employee = new Employee(_testEmployeeId, _testUsername),
-                Door = new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1),
-                AccessGranted = true,
-                Reason = "Test Event"
-            }
+            new EventLog(new Employee(_testEmployeeId, _testUsername), new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1)
+            , true, "Test Event")
         };
 
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeAsync(_testUsername))
@@ -71,7 +66,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
                 .ReturnsAsync((eventLogs, true));
 
             // Act
-            var result = await EventLogService.GetAllEventsByEmployee(_testUsername, request);
+            var result = await EventLogService.GetAllEventsByEmployee(_testUsername, request, _testtimzoneId);
 
             // Assert
             Assert.True(result.IsSuccessful);

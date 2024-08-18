@@ -14,5 +14,6 @@ namespace SecureGate.Domain.Aggregates.EventLogAggregate.DTOs
         public string DoorName { get; set; }
         public bool AccessGranted { get; set; }
         public string Reason { get; set; }
+        public DateTime Date { get; set; }
     }
 }

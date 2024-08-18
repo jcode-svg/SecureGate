@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using SecureGate.API.CustomMiddlewares;
 using SecureGate.API.Extensions;
+using SecureGate.Application.EventHandlers;
 using SecureGate.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,7 @@ builder.Services.ConfigureSwagger();
 
 builder.Services.AddCustomAuthentication(configuration);
 builder.Services.ConfigureDatabase();
+builder.Services.InjectMediatR();
 builder.Services.AddApplicationServices();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>

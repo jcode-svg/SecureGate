@@ -5,6 +5,7 @@ using SecureGate.Domain.Aggregates.EventLogAggregate.DTOs;
 using SecureGate.Domain.Aggregates.OfficeAggregate;
 using SecureGate.Domain.RepositoryContracts;
 using SecureGate.Domain.ViewModels.Response;
+using SecureGate.SharedKernel.HelperMethods;
 using SecureGate.SharedKernel.Models;
 using static SecureGate.SharedKernel.AppConstants.ErrorMessages;
 
@@ -23,7 +24,7 @@ namespace SecureGate.Application.Implementation
             _officeManagementRepository = officeManagementRepository;
         }
 
-        public async Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEvents(PaginatedRequest request)
+        public async Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEvents(PaginatedRequest request, string timeZoneId)
         {
             (List<EventLog> allEvents, bool hasNextPage) = await _eventLogRepository.GetAllEvents(request);
 
@@ -40,6 +41,7 @@ namespace SecureGate.Application.Implementation
                 DoorName = x.Door?.Name,
                 AccessGranted = x.AccessGranted,
                 Reason = x.Reason,
+                Date = x.CreatedAt.GetCurrentTimeInTimeZone(timeZoneId)
             }).ToList();
 
             var response = new PaginatedResponse<List<EventLogDTO>>
@@ -51,7 +53,7 @@ namespace SecureGate.Application.Implementation
             return ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>.Success(response);
         }
 
-        public async Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByEmployee(string username, PaginatedRequest request)
+        public async Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByEmployee(string username, PaginatedRequest request, string timeZoneId)
         {
             Employee employee = await _employeeRepository.GetEmployeeAsync(username);
 
@@ -75,6 +77,7 @@ namespace SecureGate.Application.Implementation
                 DoorName = x.Door?.Name,
                 AccessGranted = x.AccessGranted,
                 Reason = x.Reason,
+                Date = x.CreatedAt.GetCurrentTimeInTimeZone(timeZoneId)
             }).ToList();
 
             var response = new PaginatedResponse<List<EventLogDTO>>
@@ -86,7 +89,7 @@ namespace SecureGate.Application.Implementation
             return ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>.Success(response);
         }
 
-        public async Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByDoor(string doorId, PaginatedRequest request)
+        public async Task<ResponseWrapper<PaginatedResponse<List<EventLogDTO>>>> GetAllEventsByDoor(string doorId, PaginatedRequest request, string timeZoneId)
         {
             bool isParsed = Guid.TryParse(doorId, out Guid parsedDoorId);
 
@@ -117,6 +120,7 @@ namespace SecureGate.Application.Implementation
                 DoorName = x.Door?.Name,
                 AccessGranted = x.AccessGranted,
                 Reason = x.Reason,
+                Date = x.CreatedAt.GetCurrentTimeInTimeZone(timeZoneId)
             }).ToList();
 
             var response = new PaginatedResponse<List<EventLogDTO>>

@@ -1,5 +1,4 @@
 ﻿using Moq;
-using NSubstitute;
 using SecureGate.Domain.Aggregates.AccessRuleAggregate;
 using SecureGate.Domain.Aggregates.EmployeeAggregate;
 using SecureGate.Domain.Aggregates.OfficeAggregate;
@@ -52,7 +51,7 @@ namespace SecureGate.Service.Tests.AccessVerificationServiceTests
             var result = await AccessVerificationService.VerifyAccess(request);
 
             // Assert
-            Assert.Equal(CannotCompleteRequest, result.Message);
+            Assert.Equal(EmployeeNotFound, result.Message);
             Assert.False(result.IsSuccessful);
         }
 
@@ -82,8 +81,8 @@ namespace SecureGate.Service.Tests.AccessVerificationServiceTests
             // Arrange
             var request = new VerifyAccessRequest(_testEmployeeId.ToString(), _testDoorId.ToString());
 
-            AccessRuleWrapperMock.Setup(x => x.VerifyLevelBasedAccess(It.IsAny<AccessLevel>(), It.IsAny<AccessLevel>()))
-                .Returns(true);
+            OfficeManagementRepositoryMock.Setup(x => x.GetDoorByIdAsync(_testDoorId))
+                .ReturnsAsync(new Door(_testDoorId, AccessType.LevelBasedAccess, AccessLevel.Level1));
 
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeByIdAsync(_testEmployeeId))
                 .ReturnsAsync(new Employee(_testEmployeeId, _testUsername));
@@ -133,9 +132,6 @@ namespace SecureGate.Service.Tests.AccessVerificationServiceTests
             AccessRuleRepositoryMock.Setup(x => x.GetActiveAccessRuleAsync(_testEmployeeId, _testDoorId))
                 .ReturnsAsync(accessRule);
 
-            AccessRuleWrapperMock.Setup(x => x.VerifyIndividualAccess(_accessRuleId, _testEmployeeId, _testDoorId, true))
-                .Returns(true);
-
             // Act
             var result = await AccessVerificationService.VerifyAccess(request);
 
@@ -150,8 +146,6 @@ namespace SecureGate.Service.Tests.AccessVerificationServiceTests
             // Arrange
             var request = new VerifyAccessRequest(_testEmployeeId.ToString(), _testDoorId.ToString());
 
-            var accessRule = new AccessRule(_accessRuleId, _testEmployeeId, _testDoorId, true);
-
             EmployeeRepositoryMock.Setup(x => x.GetEmployeeByIdAsync(_testEmployeeId))
                 .ReturnsAsync(new Employee(_testEmployeeId, _testUsername));
 
@@ -160,9 +154,6 @@ namespace SecureGate.Service.Tests.AccessVerificationServiceTests
 
             AccessRuleRepositoryMock.Setup(x => x.GetActiveAccessRuleAsync(_testEmployeeId, _testDoorId))
                 .ReturnsAsync((AccessRule)null);
-
-            AccessRuleWrapperMock.Setup(x => x.VerifyIndividualAccess(_accessRuleId, _testEmployeeId, _testDoorId, true))
-                .Returns(false);
 
             // Act
             var result = await AccessVerificationService.VerifyAccess(request);

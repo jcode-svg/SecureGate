@@ -20,6 +20,7 @@ namespace SecureGate.Service.Tests.EventLogServiceTests
         protected readonly Guid _testEmployeeId = Guid.NewGuid();
         protected readonly Guid _testDoorId = Guid.NewGuid();
         protected readonly string _testUsername = "username";
+        protected readonly string _testtimzoneId = "UTC";
 
         public EventLogServiceTestsBaseSetup()
         {

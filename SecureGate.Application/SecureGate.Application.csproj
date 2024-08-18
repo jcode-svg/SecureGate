@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="MediatR" Version="12.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SecureGate.Domain\SecureGate.Domain.csproj" />
     <ProjectReference Include="..\SecureGate.Infrastructure\SecureGate.Infrastructure.csproj" />
     <ProjectReference Include="..\SecureGate.SharedKernel\SecureGate.SharedKernel.csproj" />

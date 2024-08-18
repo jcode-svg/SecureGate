@@ -28,70 +28,41 @@ namespace SecureGate.Application.Implementation
 
         public async Task<ResponseWrapper<VerifyAccessResponse>> VerifyAccess(VerifyAccessRequest request)
         {
-            bool isAuthorized = false;
-            bool employeeIdParsed = Guid.TryParse(request.EmployeeId, out Guid parsedEmployeeId);
-            bool doorIdParsed = Guid.TryParse(request.DoorId, out Guid parsedDoorId);
-            EventLog eventLog = EventLog.CreateEventLog(parsedEmployeeId, parsedDoorId);
-
-            if (!employeeIdParsed)
+            if (!Guid.TryParse(request.EmployeeId, out Guid parsedEmployeeId))
             {
                 return ResponseWrapper<VerifyAccessResponse>.Error(CannotCompleteRequest);
             }
 
-            if (!doorIdParsed)
+            if (!Guid.TryParse(request.DoorId, out Guid parsedDoorId))
             {
                 return ResponseWrapper<VerifyAccessResponse>.Error(CouldNotParseDoorId);
             }
 
-            Employee employee = await _employeeRepository.GetEmployeeByIdAsync(parsedEmployeeId);
-
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(parsedEmployeeId);
             if (employee == null)
             {
-                return ResponseWrapper<VerifyAccessResponse>.Error(CannotCompleteRequest);
+                return ResponseWrapper<VerifyAccessResponse>.Error(EmployeeNotFound);
             }
 
-            Door door = await _officeManagementRepository.GetDoorByIdAsync(parsedDoorId);
-
+            var door = await _officeManagementRepository.GetDoorByIdAsync(parsedDoorId);
             if (door == null)
             {
                 return ResponseWrapper<VerifyAccessResponse>.Error(CouldNotParseDoorId);
             }
 
-            switch (door.AccessType)
+            bool isAuthorized = door.AccessType switch
             {
-                case AccessType.LevelBasedAccess:
-                    isAuthorized = AccessRule.VerifyLevelBasedAccess(employee.Role.AccessLevel, door.AccessLevel);
-                    break;
+                AccessType.LevelBasedAccess => VerifyLevelBasedAccess(employee.Role.AccessLevel, door.AccessLevel),
+                AccessType.IndividualAccess => await VerifyIndividualAccessAsync(employee.Id, door.Id),
+                _ => false
+            };
 
-                case AccessType.IndividualAccess:
-                    AccessRule accessRule = await _accessRuleRepository.GetActiveAccessRuleAsync(employee.Id, door.Id);
-
-                    if (accessRule == null)
-                    {
-                        eventLog.UpdateAccessStatus(isAuthorized, NoAccess);
-                        await _eventLogRepository.AddEventLogAsync(eventLog);
-                        await _eventLogRepository.SaveChangesAsync();
-                        return ResponseWrapper<VerifyAccessResponse>.Error(AccessDenied);
-                    }
-
-                    isAuthorized = accessRule.VerifyIndividualAccess(employee.Id, door.Id);
-                    break;
-
-                default:
-                    break;
-            }
+            await LogAccessAttemptAsync(parsedEmployeeId, parsedDoorId, isAuthorized);
 
             if (!isAuthorized)
             {
-                eventLog.UpdateAccessStatus(isAuthorized, NoAccess);
-                await _eventLogRepository.AddEventLogAsync(eventLog);
-                await _eventLogRepository.SaveChangesAsync();
                 return ResponseWrapper<VerifyAccessResponse>.Error(AccessDenied);
             }
-
-            eventLog.UpdateAccessStatus(isAuthorized);
-            await _eventLogRepository.AddEventLogAsync(eventLog);
-            await _eventLogRepository.SaveChangesAsync();
 
             var response = new VerifyAccessResponse
             {
@@ -99,6 +70,25 @@ namespace SecureGate.Application.Implementation
             };
 
             return ResponseWrapper<VerifyAccessResponse>.Success(response, AccessGranted);
+        }
+
+        private bool VerifyLevelBasedAccess(AccessLevel employeeAccessLevel, AccessLevel doorAccessLevel)
+        {
+            return employeeAccessLevel >= doorAccessLevel;
+        }
+
+        private async Task<bool> VerifyIndividualAccessAsync(Guid employeeId, Guid doorId)
+        {
+            var accessRule = await _accessRuleRepository.GetActiveAccessRuleAsync(employeeId, doorId);
+            return accessRule != null && accessRule.VerifyIndividualAccess(employeeId, doorId);
+        }
+
+        private async Task LogAccessAttemptAsync(Guid employeeId, Guid doorId, bool isAuthorized)
+        {
+            var eventLog = EventLog.CreateEventLog(employeeId, doorId);
+            eventLog.UpdateAccessStatus(isAuthorized);
+            await _eventLogRepository.AddEventLogAsync(eventLog);
+            await _eventLogRepository.SaveChangesAsync();
         }
     }
 }

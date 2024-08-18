@@ -42,21 +42,9 @@ namespace SecureGate.Infrastructure.Data
 
             modelBuilder.Entity<Role>().HasData(
                 new Role(adminRoleId).CreateAdminRole(),
-                new Role
-                {
-                    Name = "Director",
-                    AccessLevel = AccessLevel.Level2
-                },
-                new Role
-                {
-                    Name = "Office Manager",
-                    AccessLevel = AccessLevel.Level2
-                },
-                new Role
-                {
-                    Name = "Regular Employee",
-                    AccessLevel = AccessLevel.Level1
-                });
+                new Role("Director", AccessLevel.Level2),
+                new Role("Office Manager", AccessLevel.Level2),
+                new Role("Regular Employee", AccessLevel.Level1));
 
             modelBuilder.Entity<BioData>().HasData(
                 new BioData(adminBioDataId).CreateAdminBioData());

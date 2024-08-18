@@ -17,11 +17,11 @@ namespace SecureGate.Domain.Aggregates.AccessRuleAggregate
             Active = active;
         }
 
-        public Guid EmployeeId { get;  set; }
-        public Guid DoorId { get;  set; }
+        public Guid EmployeeId { get;  private set; }
+        public Guid DoorId { get;  private set; }
         public bool Active { get; private set; }
-        public Employee Employee { get; set; }
-        public Door Door { get; set; }
+        public Employee Employee { get; private set; }
+        public Door Door { get; private set; }
 
         public static AccessRule CreateNewAccess(Guid employeeId, Guid doorId)
         {

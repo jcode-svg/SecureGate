@@ -9,12 +9,20 @@ namespace SecureGate.Domain.Aggregates.EventLogAggregate
         public EventLog() : base(Guid.NewGuid())
         { }
 
-        public Guid EmployeeId { get; set; }
-        public Guid DoorId { get; set; }
-        public bool AccessGranted { get; set; } = false;
-        public string Reason { get; set; } = string.Empty;
-        public Employee Employee { get; set; }
-        public Door Door { get; set; }
+        public EventLog(Employee employee, Door door, bool accessGranted, string reason) : base(Guid.NewGuid())
+        {
+            Employee = employee;
+            Door = door;
+            AccessGranted = accessGranted;
+            Reason = reason;
+        }
+
+        public Guid EmployeeId { get; private set; }
+        public Guid DoorId { get; private set; }
+        public bool AccessGranted { get; private set; } = false;
+        public string Reason { get; private set; } = string.Empty;
+        public Employee Employee { get; private set; }
+        public Door Door { get; private set; }
 
         public static EventLog CreateEventLog(Guid employeeId, Guid doorId)
         {
