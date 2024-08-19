@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecureGate.Application.Contracts;
 using SecureGate.Domain.Aggregates.EmployeeAggregate;
@@ -17,10 +18,12 @@ namespace SecureGate.API.Controllers
     public class EmployeeManagementController : ControllerBase
     {
         private readonly IEmployeeManagementService _employeeManagementService;
+        private readonly IValidator<ApproveEmployeeRegistrationRequest> _validator;
 
-        public EmployeeManagementController(IEmployeeManagementService employeeManagementService)
+        public EmployeeManagementController(IEmployeeManagementService employeeManagementService, IValidator<ApproveEmployeeRegistrationRequest> validator)
         {
             _employeeManagementService = employeeManagementService;
+            _validator = validator;
         }
 
         [HttpGet("employees")]
@@ -85,7 +88,7 @@ namespace SecureGate.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<ActionResult<ResponseWrapper<string>>> ApproveEmployeeRegistration(ApproveEmployeeRegistrationRequest request)
         {
-            var validator = new ApproveEmployeeRegistrationRequestValidator().Validate(request);
+            var validator = _validator.Validate(request);
 
             if (!validator.IsValid)
             {

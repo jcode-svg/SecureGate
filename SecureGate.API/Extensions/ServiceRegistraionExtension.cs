@@ -8,6 +8,9 @@ using SecureGate.Infrastructure.TokenGenerator;
 using SecureGate.Repository.Implementation;
 using MediatR;
 using System.Reflection;
+using FluentValidation;
+using SecureGate.Domain.Validation;
+using SecureGate.Domain.ViewModels.Request;
 
 
 namespace SecureGate.API.Extensions
@@ -27,6 +30,7 @@ namespace SecureGate.API.Extensions
             services.AddScoped<IEmployeeManagementService, EmployeeManagementService>();
             services.AddScoped<IEventLogService, EventLogService>();
             services.AddScoped<IOfficeManagementService, OfficeManagementService>();
+            services.AddTransient<IValidator<ApproveEmployeeRegistrationRequest>, ApproveEmployeeRegistrationRequestValidator>();
         }
 
         public static void InjectMediatR(this IServiceCollection services)
